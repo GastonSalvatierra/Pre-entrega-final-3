@@ -7,13 +7,14 @@ import viewsRouter from './routes/views.router.js';
 import __dirname from './utils.js';
 import mongoose from 'mongoose';
 import { Server } from 'socket.io';
-import MessageModel from './models/db/message.js';
+import MessageModel from './services/dao/db/models/message.js';
 import session from 'express-session';
 import sessionRouter from './routes/session.router.js'
 import githubLoginViewRouter from './routes/github-login.views.router.js'
 import initializePassport from './config/passport.config.js';
 import passport from 'passport';
 import config from './config/config.js'
+import MongoSingleton from './config/mongodb-singleton.js';
 
 
 //import cartsModel from './services/db/models/carts.js';
@@ -72,8 +73,17 @@ const httpServer = app.listen(PORT, () => {
     console.log("Server run on port: " + PORT);
 })
 
+const mongoInstance = async () => {
+    try {
+        await MongoSingleton.getIntance()
+    } catch (error) {
+        console.log(error);
+    }
+}
+mongoInstance()
 
-const DB = async () => {
+
+/* const DB = async () => {
     try {
 
         
@@ -85,7 +95,7 @@ const DB = async () => {
 
 
         //AGREGO ID AL CARRITO
-        /* const cart = await cartsModel.findById(cartId);
+        const cart = await cartsModel.findById(cartId);
 
         if (!cart) {
             console.log("El carrito no se encontró.");
@@ -99,13 +109,13 @@ const DB = async () => {
             return;
         }
 
-        cart.products[targetIndex].product = [{ productId: productIdToAdd }]; */
+        cart.products[targetIndex].product = [{ productId: productIdToAdd }];
 
 
 
         //ACTUALIZO LA DB
-        /* let result = await cartsModel.updateOne(cart);
-        console.log(result); */
+        let result = await cartsModel.updateOne(cart);
+        console.log(result);
 
 
         } catch (error) {
@@ -114,7 +124,12 @@ const DB = async () => {
         }
 
 };
-DB();
+
+invocar funcion
+ */
+
+
+
 
 // Instanciamos socket.io
 const socketServer = new Server(httpServer);

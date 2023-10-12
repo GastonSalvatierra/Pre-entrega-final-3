@@ -1,4 +1,4 @@
-import cartsModel from "../models/db/carts.js";
+import cartsModel from "../db/models/carts.js";
 
 
 export default class cartService {

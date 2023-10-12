@@ -24,7 +24,9 @@ router.get("/githubcallback", passport.authenticate('github', { failureRedirect:
 });
 
 
-router.post("/register", userRegister );
+router.get("/current", userRegister );
+
+router.post("/register", userRegister);
 
 router.post("/login", userLogin);
 

@@ -1,4 +1,4 @@
-import productService from '../services/products.services.js'
+import productService from '../services/dao/db/products.services.js'
 const productServices = new productService();
 
 

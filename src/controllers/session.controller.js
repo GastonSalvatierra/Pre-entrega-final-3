@@ -1,4 +1,4 @@
-import userModel from '../models/db/user.js';
+import userModel from '../services/dao/db/models/user.js';
 import { isValidPassword , createHash } from '../utils.js';
 
 
