@@ -1,10 +1,10 @@
-import cartService from '../services/dao/db/carts.services.js'
-const cartServices = new cartService();
+import {cartService} from '../services/factory.js'
+import CartDto from '../services/dto/Carts.dto.js';
 
 
 export const getCart = async (req, res) => {
     try {
-        let carts = await cartServices.getAll();
+        let carts = await cartService.getAll();
         res.send(carts);
     } catch (error) {
         console.error(error);
@@ -20,11 +20,11 @@ export const getCartId = async (req, res) => {
     try {
         let cartId = req.params.cid;
 
-        if (!cid) {
+        if (!cartId) {
             return res.status(400).send({ message: "El parámetro cid es inválido" });
           }
         
-        let carts = await cartServices.updateCartPopulate(cartId);
+        let carts = await cartService.updateCartPopulate(cartId);
         res.send(carts);
         
     } catch (error) {
@@ -38,13 +38,13 @@ export const getCartId = async (req, res) => {
 
 
 export const postCart = async (req, res) => {
-    const carts = req.body
-    if (!carts) {
+    const cartDto = new CartDto (req.body)
+    if (!cartDto) {
         return res.status(400).send({ message: "El parámetro cid es inválido" });
       }
     
     try {
-        let result = await cartServices.save(carts);
+        let result = await cartService.save(cartDto);
         res.status(201).send(result);
     } catch (error) {
         console.error(error);
@@ -64,7 +64,7 @@ export const deleteCart = async (req, res) => {
       }
 
     try {
-        let result = await cartServices.deleteCart(cartId, productId);
+        let result = await cartService.deleteCart(cartId, productId);
         res.status(201).send("producto eliminado correctamente");
 
     } catch (error) {
@@ -85,7 +85,7 @@ export const deleteCartId = async (req, res) => {
     
 
     try {
-        let result = await cartServices.deleteAll(cartId);
+        let result = await cartService.deleteAll(cartId);
         res.status(201).send("productos eliminados correctamente");
         console.log(result);
 
@@ -107,7 +107,7 @@ export const putCart = async (req, res) => {
       }
     
     try {
-        let result = await cartServices.updateAll(cartId, updateProducts);
+        let result = await cartService.updateAll(cartId, updateProducts);
         res.status(201).send("carrito actualizado con exito");
         console.log(result);
     } catch (error) {
@@ -132,7 +132,7 @@ export const putCartPid = async (req, res) => {
 
     try {
         console.log(quantity);
-        let result = await cartServices.updateQuantity(cartId,productId,quantity);
+        let result = await cartService.updateQuantity(cartId,productId,quantity);
         res.status(201).send("cantidad actulizada con exito");
         console.log(result);
     } catch (error) {

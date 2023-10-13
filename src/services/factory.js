@@ -1,7 +1,11 @@
 
-import config from "../config/config";
+import config from "../config/config.js";
 import MongoSingleton from '../config/mongodb-singleton.js'
 
+
+let cartService;
+let messageService;
+let productService;
 
 
 async function initializeMongoService() {
@@ -11,15 +15,20 @@ async function initializeMongoService() {
         await MongoSingleton.getIntance()
 
         // Creamos las instancias de las Clases de DAO de Mongo
-        const { default: CoursesServiceMongo } = await import('./dao/db/courses.service.js');
-        coursesService = new CoursesServiceMongo();
-        console.log("Servicio de courses cargado:");
-        console.log(coursesService);
+        const { default: CartServiceMongo } = await import('./dao/db/carts.services.js');
+        cartService = new CartServiceMongo();
+        console.log("Servicio de cart cargado:");
+        console.log(cartService);
 
-        const { default: StudentServiceMongo } = await import('./dao/db/students.service.js');
-        studentService = new StudentServiceMongo();
-        console.log("Servicio de estudiantes cargado:");
-        console.log(studentService);
+        const { default: MessageServiceMongo } = await import('./dao/db/message.services.js');
+        messageService = new MessageServiceMongo();
+        console.log("Servicio de message cargado:");
+        console.log(messageService);
+
+        const { default: ProductServiceMongo } = await import('./dao/db/products.services.js');
+        productService = new ProductServiceMongo();
+        console.log("Servicio de products cargado:");
+        console.log(productService);
 
 
     } catch (error) {
@@ -35,7 +44,9 @@ switch (config.persistence) {
         break;
 
     case 'files':
-        //FILES     
+        //LOGICA PARA CREAR INSTANCIA DE FILES EN CASO DE UTILIZAR ESTE DAO
+        console.log("LOGICA PARA FILES");
+        break;
 
     case 'sql':
         // SQL
@@ -46,3 +57,6 @@ switch (config.persistence) {
         console.error("Persistencia no válida en la configuración:", config.persistence);
         process.exit(1); // Salir con código de error
 }
+
+
+export{cartService, messageService, productService}

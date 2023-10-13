@@ -1,4 +1,5 @@
-import productService from '../services/dao/db/products.services.js'
+import productService from '../services/dao/db/products.services.js';
+import ProductsDto from '../services/dto/products.dto.js';
 const productServices = new productService();
 
 
@@ -97,9 +98,9 @@ export const getProductsLimit10 = async (req, res) => {
 
 
 export const postProductsSave = async (req, res) => {
-    const product = req.body
+    const productDto = new ProductsDto(req.body)
     try {
-        let result = await productServices.save(product);
+        let result = await productServices.save(productDto);
         res.status(201).send(result);
     } catch (error) {
         console.error(error);
