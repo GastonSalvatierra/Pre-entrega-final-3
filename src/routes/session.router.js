@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import passport from 'passport';
 
-import {userRegister, userLogin} from '../controllers/session.controller.js'
+import {userRegister, userLogin, userSession } from '../controllers/session.controller.js'
 
 
 
@@ -24,7 +24,7 @@ router.get("/githubcallback", passport.authenticate('github', { failureRedirect:
 });
 
 
-router.get("/current", userLogin);
+router.get("/current", userSession);
 
 router.post("/register", userRegister);
 

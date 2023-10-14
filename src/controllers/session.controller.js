@@ -1,5 +1,7 @@
 import userModel from '../services/dao/db/models/user.js';
 import { isValidPassword , createHash } from '../utils.js';
+import SessionDto from '../services/dto/session.dto.js';
+
 
 
 
@@ -53,8 +55,33 @@ export const userLogin = async (req, res) => {
     res.send({ status: "success", payload: req.session.user, message: "¡Primer logueo realizado! :)" });
 }
 
+export const userSession = async (req, res) => {
+
+    if (req.session && req.session.user) {
+
+        const sessionDto = new SessionDto (req.session.user);
+
+        res.send(`Datos de la sesión actual: ${JSON.stringify(sessionDto.role)}`);
+      } else {
+        res.status(401).send('No hay una sesión activa');
+      }
+}
 
 
+export const confirmRole = async (req, res, next) => {
+    if (req.session && req.session.user) {
+      const sessionDto = new SessionDto(req.session.user);
+      const result = JSON.stringify(sessionDto.role);
+  
+      if (result !== "admin") {
+        next();
+      } else {
+        res.status(403).send('No tienes permiso para acceder a esta ruta');
+      }
+    } else {
+      res.status(401).send('No tenes acceso a este servicio');
+    }
+  };
 
 
 

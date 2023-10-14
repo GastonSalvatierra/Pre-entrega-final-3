@@ -2,6 +2,7 @@
 import { Router } from "express";
 const router = Router();
 import {getProductsLimit,getProductsPage,postProducts,getProductsLimit10,postProductsSave,putProducts,deleteProducts} from '../controllers/products.controller.js'
+import { confirmRole } from "../controllers/session.controller.js";
 
 
 
@@ -10,6 +11,9 @@ router.get('/', getProductsLimit);
 
 router.get('/pages/:page', getProductsPage);
 
+router.get('/', getProductsLimit10)
+
+
 
 //POST
 router.post('/pages/:page', postProducts );
@@ -17,22 +21,17 @@ router.post('/pages/:page', postProducts );
 
 //CORRESPONDE A LA ENTREGA ANTERIOR
 
-
-//GET
-
-router.get('/', getProductsLimit10)
-
 //POST
 
-router.post('/', postProductsSave)
+router.post('/',confirmRole, postProductsSave)
 
 //PUT
 
-router.put('/:pid', putProducts);
+router.put('/:pid',confirmRole, putProducts);
 
 //DELETE
 
-router.delete('/:pid', deleteProducts);
+router.delete('/:pid',confirmRole, deleteProducts);
 
 
 

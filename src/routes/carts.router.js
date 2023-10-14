@@ -2,6 +2,8 @@
 import { Router } from "express";
 const router = Router();
 import {getCart,getCartId,postCart,deleteCart,deleteCartId,putCart,putCartPid} from '../controllers/carts.controller.js'
+import { confirmRole } from "../controllers/session.controller.js";
+
 
 //GET
 router.get('/', getCart )
@@ -12,14 +14,14 @@ router.get('/:cid', getCartId )
 router.post('/', postCart )
 
 //PUT
-router.put('/:cid', putCart )
+router.put('/:cid',confirmRole, putCart )
 
-router.put('/:cid/carts/:pid', putCartPid )
+router.put('/:cid/carts/:pid',confirmRole, putCartPid )
 
 //DELETE
-router.delete('/:cid/products/:pid', deleteCart )
+router.delete('/:cid/products/:pid',confirmRole, deleteCart )
 
-router.delete('/:cid', deleteCartId )
+router.delete('/:cid',confirmRole, deleteCartId )
 
 
 
