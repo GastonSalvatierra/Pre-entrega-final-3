@@ -1,4 +1,5 @@
 import cartsModel from "../db/models/carts.js";
+import ticketModel from "./models/ticket.js";
 
 
 export default class cartService {
@@ -31,6 +32,17 @@ export default class cartService {
             const newCart = await cartsModel.create(cart);
             console.log(cart);
             return newCart;
+            
+        }catch (error) {
+            throw error;
+        }
+    }
+
+    generateTicket = async (product) => {
+        try {
+            const newTicket = await ticketModel.create(product);
+            console.log(newTicket);
+            return newTicket;
             
         }catch (error) {
             throw error;
@@ -79,7 +91,7 @@ export default class cartService {
         }
     }
 
-    updateCartPopulate  = async (cartId,updateCart) => {
+    updateCartPopulate  = async (cartId) => {
         try {
 
             //HAGO EL POPULATE

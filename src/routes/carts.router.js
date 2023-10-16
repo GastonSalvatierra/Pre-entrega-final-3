@@ -1,7 +1,7 @@
 //import fs from 'fs';
 import { Router } from "express";
 const router = Router();
-import {getCart,getCartId,postCart,deleteCart,deleteCartId,putCart,putCartPid} from '../controllers/carts.controller.js'
+import {getCart,getCartId,postCart,deleteCart,deleteCartId,putCart,putCartPid,cartPurchase} from '../controllers/carts.controller.js'
 import { confirmRole } from "../controllers/session.controller.js";
 
 
@@ -9,6 +9,8 @@ import { confirmRole } from "../controllers/session.controller.js";
 router.get('/', getCart )
 
 router.get('/:cid', getCartId )
+
+router.post('/purchase', cartPurchase)
 
 //POST
 router.post('/', postCart )

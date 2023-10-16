@@ -7,7 +7,7 @@ import SessionDto from '../services/dto/session.dto.js';
 
 
 export const userRegister = async (req, res) => {
-    const { first_name, last_name, email, age, password, role } = req.body;
+    const { first_name, last_name, email, age, password, role, cart } = req.body;
     console.log("Registrando user");
     console.log(req.body);
 
@@ -21,7 +21,8 @@ export const userRegister = async (req, res) => {
         email,
         role,
         age,
-        password: createHash(password)
+        password: createHash(password),
+        cart
     }
     if (role === "") {
         user.role = "user";
@@ -50,10 +51,15 @@ export const userLogin = async (req, res) => {
         name: `${user.first_name} ${user.last_name}`,
         email: user.email,
         age: user.age,
-        role: user.role
+        role: user.role,
+        cart: user._id
     }
+    console.log(req.session.user);
     res.send({ status: "success", payload: req.session.user, message: "¡Primer logueo realizado! :)" });
 }
+
+
+
 
 export const userSession = async (req, res) => {
 

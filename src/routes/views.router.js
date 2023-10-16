@@ -14,6 +14,10 @@ router.get("/register", (req, res) => {
     res.render('register')
 });
 
+router.get("/api/carts/purchase", (req, res) => {
+    res.render('purchase')
+});
+
 
 
 export default router;

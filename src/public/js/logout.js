@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
 
 const form = document.getElementById('closeAll');
+const addProduct = document.querySelectorAll('.addProduct');
 
 form.addEventListener('click', () => {
     // Realiza una solicitud al servidor para destruir la sesión
@@ -21,7 +22,23 @@ form.addEventListener('click', () => {
 });
 
 
+addProduct.forEach(boton => {
+    boton.addEventListener('click', () => {
 
+    alert('Producto agregado con exito');
+
+    });
 });
+
+
+
+
+
+
+
+   
+});
+
+
 
 

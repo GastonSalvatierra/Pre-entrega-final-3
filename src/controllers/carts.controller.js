@@ -33,6 +33,29 @@ export const getCartId = async (req, res) => {
     }
 }
 
+export const cartPurchase = async (req, res) => {
+
+    try {
+        let products = req.body;
+        console.log(products);
+
+        if (!products) {
+            return res.status(400).send({ message: "El parámetro es inválido" });
+          }
+        
+        if (req.body.products[0].product[0].stock <= 0) {
+            return res.status(400).send({ message: "No hay suficiente stock" });
+        }
+        
+        let confirm = await cartService.generateTicket(req.body.products[0].product[0]);
+        res.status(201).send({ message: "Producto comprado con éxito", payload: confirm });
+
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).send({error:  error, message: "Hubo un error en la operacion."});
+    }
+}
 
 
 

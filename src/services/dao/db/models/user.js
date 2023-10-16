@@ -15,8 +15,8 @@ const schema = new mongoose.Schema({
         default: "user"
     },
     cart:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref: "products"
+        type:String, 
+        default: " "
     },     
     password: String //hasheado
 })
